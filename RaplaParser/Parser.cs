@@ -101,8 +101,9 @@ namespace RaplaParser
             return appointmentDictionary;
         }
 
-        public static String getConfigString(String key){
-            return (String)config.GetValue(key, typeof(String));        
+        public static String getConfigString(String key)
+        {
+            return (String)config.GetValue(key, typeof(String));
         }
     }
 }

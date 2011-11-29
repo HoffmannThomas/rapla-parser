@@ -13,16 +13,15 @@ namespace RaplaParser
         {
             string selection = "";
 
+            Parser parser = new Parser();
+            parser.printAppointments();
+
             while (selection.ToLower() != "q")
             {
-                Parser parser = new Parser();
-                parser.printAppointments();
-
                 Console.WriteLine();
-                Console.WriteLine("Enter 'Q' to exit or press enter to continue.");
+                Console.WriteLine("Enter 'Q' to exit.");
                 Console.Write("> ");
-
-                selection = Console.ReadLine();
+                selection = Console.ReadKey().KeyChar.ToString();
             }
         }
     }
