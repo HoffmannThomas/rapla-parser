@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-
+using ExchangeConnector;
 
 namespace RaplaParser
 {
@@ -15,6 +15,8 @@ namespace RaplaParser
 
             Parser parser = new Parser();
             parser.printAppointments();
+
+            ExchangeConnector.EWSConnector connector = new ExchangeConnector.EWSConnector();
 
             while (selection.ToLower() != "q")
             {
