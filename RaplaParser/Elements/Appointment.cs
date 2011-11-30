@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace RaplaParser.Elements
 {
-    class Appointment
+    public class Appointment
     {
 
         private String name;

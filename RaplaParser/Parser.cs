@@ -6,20 +6,20 @@ using System.Xml;
 using RaplaParser.Elements;
 using RaplaParser.Elements.Resources;
 using System.Configuration;
+using ConfigurationManager;
 
 namespace RaplaParser
 {
-    class Parser
+    public class Parser
     {
-        private static AppSettingsReader config = new AppSettingsReader();
         private static Dictionary<String, Resource> resourceDictionary = new Dictionary<String, Resource>();
-        private static Dictionary<String, Appointment> appointmentDictionary = new Dictionary<String, Appointment>();
+        private static Dictionary<String, Appointment> appointmentDictionary = new Dictionary<String, Appointment>();        
 
         private XmlDocument xmlDocument = new XmlDocument();
 
         public Parser()
         {
-            xmlDocument.Load(getConfigString("rapla_data_path"));
+            xmlDocument.Load(ConfigManager.getConfigString("rapla_data_path"));
             this.readDocument();
         }
 
@@ -45,7 +45,7 @@ namespace RaplaParser
 
         private void readAppointments()
         {
-            XmlNodeList nodeList = xmlDocument.GetElementsByTagName(getConfigString("rapla_reservation_type_name"));
+            XmlNodeList nodeList = xmlDocument.GetElementsByTagName(ConfigManager.getConfigString("rapla_reservation_type_name"));
 
             foreach (XmlNode node in nodeList)
             {
@@ -63,7 +63,7 @@ namespace RaplaParser
         private void readRooms()
         {
 
-            XmlNodeList nodeList = this.xmlDocument.GetElementsByTagName(getConfigString("rapla_resource_type_name"));
+            XmlNodeList nodeList = this.xmlDocument.GetElementsByTagName(ConfigManager.getConfigString("rapla_resource_type_name"));
 
             foreach (XmlNode node in nodeList)
             {
@@ -79,7 +79,7 @@ namespace RaplaParser
         private void readPersons()
         {
 
-            XmlNodeList nodeList = this.xmlDocument.GetElementsByTagName(getConfigString("rapla_person_type_name"));
+            XmlNodeList nodeList = this.xmlDocument.GetElementsByTagName(ConfigManager.getConfigString("rapla_person_type_name"));
 
             foreach (XmlNode node in nodeList)
             {
@@ -99,11 +99,6 @@ namespace RaplaParser
         public static Dictionary<String, Appointment> getAppointmentDictionary()
         {
             return appointmentDictionary;
-        }
-
-        public static String getConfigString(String key)
-        {
-            return (String)config.GetValue(key, typeof(String));
         }
     }
 }

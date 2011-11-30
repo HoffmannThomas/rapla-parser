@@ -6,7 +6,7 @@ using RaplaParser.Elements.Resources;
 
 namespace RaplaParser.Elements
 {
-    abstract class Resource
+    public abstract class Resource
     {
         protected ResourceType type;
 

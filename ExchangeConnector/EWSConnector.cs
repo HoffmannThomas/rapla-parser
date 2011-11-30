@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Exchange.WebServices;
 using Microsoft.Exchange.WebServices.Data;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace ExchangeConnector
 {
@@ -11,37 +14,41 @@ namespace ExchangeConnector
     {
         ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP1);
 
-        public EWSConnector()
+        String fqdn;
+
+        public EWSConnector(String fqdn, String user, String password)
         {
+            this.fqdn = fqdn;
+
+            ServicePointManager.ServerCertificateValidationCallback =
+                delegate(Object obj, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+                {
+                    return true;
+                };
+
             Console.WriteLine("Connecting...");
-            service.Credentials = new WebCredentials("thomas@win2k3.21sheeps.com", "Start123 ");
-            service.AutodiscoverUrl("thomas@win2k3.21sheeps.com");
+            service.Credentials = new WebCredentials(user + "@" + fqdn, password);
+
+            service.AutodiscoverUrl(user + "@" + fqdn);
+
             Console.WriteLine("Connection established");
+
+
         }
 
-        public void exampleEmailRequest()
+        public void SendEmail(String subject, String body, String recipient)
         {
-            // Validate the server certificate.
-            // For a certificate validation code example, see the Validating X509 Certificates topic in the Core Tasks section.
+            Console.WriteLine("Sending...");
 
-            try
-            {
-                // Create the e-mail message, set its properties, and send it to user2@contoso.com, saving a copy to the Sent Items folder. 
-                EmailMessage message = new EmailMessage(service);
-                message.Subject = "Interesting";
-                message.Body = "The proposition has been considered.";
-                message.ToRecipients.Add("user2@contoso.com");
-                message.SendAndSaveCopy();
+            // Create the e-mail message, set its properties, and send it to user2@contoso.com, saving a copy to the Sent Items folder. 
+            EmailMessage message = new EmailMessage(service);
+            message.Subject = subject;
+            message.Body = body;
+            message.ToRecipients.Add(recipient + "@" + fqdn);
+            message.SendAndSaveCopy();
 
-                // Write confirmation message to console window.
-                Console.WriteLine("Message sent!");
-                Console.ReadLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                Console.ReadLine();
-            }
+            // Write confirmation message to console window.
+            Console.WriteLine("Message sent!");
         }
     }
 }
