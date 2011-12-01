@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationManager", "Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaplaConnector", "RaplaConnector\RaplaConnector.csproj", "{17153A2A-A893-4E9D-B421-D1372FF5EFCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaplaObjects", "RaplaObjects\RaplaObjects.csproj", "{C52886DB-3298-440B-A5FC-184A79036179}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,16 @@ Global
 		{17153A2A-A893-4E9D-B421-D1372FF5EFCB}.Release|Mixed Platforms.Build.0 = Release|x86
 		{17153A2A-A893-4E9D-B421-D1372FF5EFCB}.Release|x86.ActiveCfg = Release|x86
 		{17153A2A-A893-4E9D-B421-D1372FF5EFCB}.Release|x86.Build.0 = Release|x86
+		{C52886DB-3298-440B-A5FC-184A79036179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C52886DB-3298-440B-A5FC-184A79036179}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
