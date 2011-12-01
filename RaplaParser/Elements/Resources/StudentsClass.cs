@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using ConfigurationManager;
 
@@ -11,7 +8,8 @@ namespace RaplaParser.Elements.Resources
     {
         String name;
 
-        public StudentsClass(XmlElement element):base(ResourceType.Class)
+        public StudentsClass(XmlElement element)
+            : base(ResourceType.Class)
         {
             this.name = element.GetElementsByTagName(ConfigManager.getConfigString("rapla_students_class_name")).Item(0).ChildNodes.Item(0).Value;
         }

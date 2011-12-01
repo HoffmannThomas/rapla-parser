@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ExchangeConnector;
 using ConfigurationManager;
 using RaplaParser;
-using System.Collections;
 
 namespace RaplaConnector
 {
@@ -28,12 +23,19 @@ namespace RaplaConnector
             {
                 ExchangeConnector.EWSConnector ewsConnector = new ExchangeConnector.EWSConnector(ConfigManager.getConfigString("fqdn"), user, password);
 
-                Console.WriteLine("Please enter subject, body and recipient:");
-                String subject = Console.ReadLine();
-                String body = Console.ReadLine();
-                String recipient = Console.ReadLine();
+                // some testing variables
+                String subject = "TestSubject";
+                String body = "TestBody";
+                String recipient = "TestRecipient";
+                String location = "TestLocation";
+                DateTime start = new DateTime(2011, 12, 12, 12,12,12);
+                DateTime end = start.AddHours(2);
 
-                ewsConnector.SendEmail(subject, body, recipient);
+                // test calendar
+                ExchangeConnector.AccountObjectFactory.CreateCalendarObject(ewsConnector, subject, body,start, end, location);
+
+                // test email
+                ExchangeConnector.AccountObjectFactory.SendEmail(ewsConnector, subject, body, recipient);
             }
             catch (Exception ex)
             {

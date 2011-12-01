@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
+using ConfigurationManager;
 using RaplaParser.Elements;
 using RaplaParser.Elements.Resources;
-using System.Configuration;
-using ConfigurationManager;
 
 namespace RaplaParser
 {
