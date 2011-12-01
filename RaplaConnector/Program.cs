@@ -15,7 +15,7 @@ namespace RaplaConnector
         {
             string selection = "";
 
-            Parser parser = new Parser();
+            Parser parser = new Parser(ConfigManager.getConfigString("rapla_data_path"));
             parser.printAppointments();
 
             Console.WriteLine("Please enter your username:");

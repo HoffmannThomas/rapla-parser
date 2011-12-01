@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace RaplaParser.Elements
 {
-    public class Appointment
+    public class Reservation
     {
 
         private String name;
@@ -18,7 +18,7 @@ namespace RaplaParser.Elements
         private Repeating repeating;
         private List<Resource> resources = new List<Resource>();
 
-        public Appointment(XmlElement element)
+        public Reservation(XmlElement element)
         {
             this.name = element.GetElementsByTagName("dynatt:name").Item(0).ChildNodes.Item(0).Value;
             this.owner = element.Attributes.GetNamedItem("owner").Value;

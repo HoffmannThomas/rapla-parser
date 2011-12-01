@@ -69,10 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Elements\Appointment.cs" />
+    <Compile Include="Elements\Reservation.cs" />
     <Compile Include="Elements\Repeating.cs" />
+    <Compile Include="Elements\Resources\StudentsClass.cs" />
+    <Compile Include="Elements\Resources\Lecturer.cs" />
     <Compile Include="Elements\Resources\Resource.cs" />
-    <Compile Include="Elements\Resources\Person.cs" />
     <Compile Include="Elements\Resources\ResourceType.cs" />
     <Compile Include="Elements\Resources\Room.cs" />
     <Compile Include="Parser.cs" />

@@ -7,14 +7,13 @@ using ConfigurationManager;
 
 namespace RaplaParser.Elements.Resources
 {
-    class Room : Resource
+    class StudentsClass : Resource
     {
         String name;
 
-        public Room(XmlElement element)
-            : base(ResourceType.Room)
+        public StudentsClass(XmlElement element):base(ResourceType.Class)
         {
-            this.name = element.GetElementsByTagName(ConfigManager.getConfigString("rapla_room_number")).Item(0).ChildNodes.Item(0).Value;
+            this.name = element.GetElementsByTagName(ConfigManager.getConfigString("rapla_students_class_name")).Item(0).ChildNodes.Item(0).Value;
         }
 
         public override void print()

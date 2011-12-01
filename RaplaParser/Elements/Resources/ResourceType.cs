@@ -7,7 +7,6 @@ namespace RaplaParser.Elements.Resources
 {
     public enum ResourceType
     {
-
-        Room, Person
+        Room, Lecturer, Class
     }
 }

@@ -13,13 +13,13 @@ namespace RaplaParser
     public class Parser
     {
         private static Dictionary<String, Resource> resourceDictionary = new Dictionary<String, Resource>();
-        private static Dictionary<String, Appointment> appointmentDictionary = new Dictionary<String, Appointment>();        
+        private static Dictionary<String, Reservation> reservationDictionary = new Dictionary<String, Reservation>();        
 
         private XmlDocument xmlDocument = new XmlDocument();
 
-        public Parser()
+        public Parser(String sourceURL)
         {
-            xmlDocument.Load(ConfigManager.getConfigString("rapla_data_path"));
+            xmlDocument.Load(new XmlTextReader(sourceURL));
             this.readDocument();
         }
 
@@ -29,7 +29,7 @@ namespace RaplaParser
             Console.WriteLine("Root element :" + this.xmlDocument.DocumentElement.Name);
             Console.WriteLine("-----------------------");
 
-            foreach (Appointment appointment in appointmentDictionary.Values)
+            foreach (Reservation appointment in reservationDictionary.Values)
             {
                 appointment.print();
                 Console.WriteLine("-----------------------");
@@ -50,7 +50,7 @@ namespace RaplaParser
             foreach (XmlNode node in nodeList)
             {
                 XmlElement element = (XmlElement)node;
-                appointmentDictionary.Add(element.GetAttributeNode("id").Value, new Appointment(element));
+                reservationDictionary.Add(element.GetAttributeNode("id").Value, new Reservation(element));
             }
         }
 
@@ -85,9 +85,17 @@ namespace RaplaParser
             {
                 XmlElement element = (XmlElement)node;
 
-                Person person = new Person(element);
+                if (element.ChildNodes.Item(0).Name == ConfigManager.getConfigString("rapla_lecturer_type_name"))
+                {
+                    Lecturer lecturer = new Lecturer(element);
+                    resourceDictionary.Add(element.GetAttributeNode("id").Value, lecturer);
+                }
 
-                resourceDictionary.Add(element.GetAttributeNode("id").Value, person);
+                if (element.ChildNodes.Item(0).Name == ConfigManager.getConfigString("rapla_students_class_type_name"))
+                {
+                    StudentsClass studentsClass = new StudentsClass(element);
+                    resourceDictionary.Add(element.GetAttributeNode("id").Value, studentsClass);
+                }
             }
         }
 
@@ -96,9 +104,9 @@ namespace RaplaParser
             return resourceDictionary;
         }
 
-        public static Dictionary<String, Appointment> getAppointmentDictionary()
+        public static Dictionary<String, Reservation> getReservationDictionary()
         {
-            return appointmentDictionary;
+            return reservationDictionary;
         }
     }
 }
