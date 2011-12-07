@@ -8,11 +8,13 @@ namespace ExchangeConnector
 {
     public class EWSConnector
     {
-        ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP1);
+        ExchangeService service;
         String fqdn;
 
         public EWSConnector(String fqdn, String user, String password)
         {
+
+            this.service = new ExchangeService();
             this.fqdn = fqdn;
 
             // allow all certificates (unsecure, may need improvement)
@@ -24,7 +26,7 @@ namespace ExchangeConnector
 
             Console.WriteLine("Connecting...");
 
-            service.Credentials = new WebCredentials(user + "@" + fqdn, password);
+            service.Credentials = new WebCredentials(user, password);
             service.AutodiscoverUrl(user + "@" + fqdn);
 
             Console.WriteLine("Connection established");
