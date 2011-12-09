@@ -22,7 +22,7 @@ namespace ExchangeConnector
             Console.WriteLine("Message sent!");
         }
 
-        public static void CreateCalendarObject(EWSConnector connector, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
+        public static void CreateCalendarObject(EWSConnector connector, FolderId folderID, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
         {
             Console.WriteLine("Creating appointment...");
 
@@ -48,7 +48,7 @@ namespace ExchangeConnector
             }
 
             // Send the meeting request to all attendees and save a copy in the Sent Items folder.
-            appointment.Save(SendInvitationsMode.SendToAllAndSaveCopy);
+            appointment.Save(folderID, SendInvitationsMode.SendToAllAndSaveCopy);
 
             Console.WriteLine("Appointment createt!");
         }

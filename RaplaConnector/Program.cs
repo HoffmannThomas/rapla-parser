@@ -50,6 +50,68 @@ namespace RaplaConnector
             }
         }
 
+        private static FolderId getRaplaFolder(ExchangeService service)
+        {
+            string raplaCalendar = "Rapla";
+            FolderView view = new FolderView(50);
+            SearchFilter filter = new SearchFilter.IsEqualTo(FolderSchema.DisplayName, raplaCalendar);
+
+
+            Folder parent = Folder.Bind(service, WellKnownFolderName.Calendar);
+            FindFoldersResults result = parent.FindFolders(filter, view);
+
+            if (result.Folders.Count == 0)
+            {
+                CalendarFolder folder = new CalendarFolder(service);
+                folder.DisplayName = "Rapla";
+                folder.Save(WellKnownFolderName.Calendar);
+                return folder.Id;
+            }
+            else
+            {
+                return result.Folders[0].Id;
+            }
+        }
+
+        private static Recurrence createRecurrence(Reservation reservation)
+        {
+            Recurrence recurrence = null;
+            Recurrence pattern = null;
+            DayOfTheWeek[] daysOfWeek = new DayOfTheWeek[7];
+            daysOfWeek[0] = DayOfTheWeek.Monday;
+
+            if (reservation.Repeating != null)
+            {
+                if (reservation.Repeating.GetType().Equals(typeof(RepeatDaily)))
+                {
+                    RepeatDaily daily = (RepeatDaily)reservation.Repeating;
+                    pattern = new Recurrence.DailyPattern(reservation.DateStart, daily.interval);
+                }
+                if (reservation.Repeating.GetType().Equals(typeof(RepeatWeekly)))
+                {
+                    RepeatWeekly weekly = (RepeatWeekly)reservation.Repeating;
+                    pattern = new Recurrence.WeeklyPattern(reservation.DateStart, weekly.interval, daysOfWeek);
+                }
+                if (reservation.Repeating.GetType().Equals(typeof(RepeatDaily)))
+                {
+                    RepeatMonthly monthly = (RepeatMonthly)reservation.Repeating;
+                    pattern = new Recurrence.MonthlyPattern();
+                }
+                if (reservation.Repeating.GetType().Equals(typeof(RepeatDaily)))
+                {
+                    RepeatYearly yearly = (RepeatYearly)reservation.Repeating;
+                    pattern = new Recurrence.YearlyPattern();
+                }
+                recurrence = AccountObjectFactory.createRecurrence(
+                                reservation.DateStart,
+                                reservation.Repeating.until,
+                                reservation.Repeating.count,
+                                pattern,
+                                reservation.Repeating.IsForever
+                                );
+            }
+            return recurrence;
+        }
 
         private static void saveReservations(ExchangeConnector.EWSConnector ewsConnector)
         {
@@ -57,15 +119,11 @@ namespace RaplaConnector
             {
                 Course course = (Course)reservation;
 
-                Recurrence recurrence = null;
-                Recurrence pattern = null;
                 List<EmailAddress> roomAddresses = new List<EmailAddress>();
                 List<EmailAddress> attendantAddresses = new List<EmailAddress>();
                 String locationString = "";
-                DayOfTheWeek[] daysOfWeek = new DayOfTheWeek[7];
-                daysOfWeek[0] = DayOfTheWeek.Monday;
 
-                foreach (Room room in course.Rooms)
+                foreach (Room room in reservation.Rooms)
                 {
                     if (room.GetType() == typeof(CourseRoom))
                     {
@@ -74,7 +132,7 @@ namespace RaplaConnector
                     }
                 }
 
-                foreach (Person person in course.Attendants)
+                foreach (Person person in reservation.Attendants)
                 {
                     if (person.GetType() == typeof(StudentsClass))
                     {
@@ -82,45 +140,15 @@ namespace RaplaConnector
                     }
                 }
 
-                if (course.Repeating != null)
-                {
-                    if (course.Repeating.GetType().Equals(typeof(RepeatDaily)))
-                    {
-                        RepeatDaily daily = (RepeatDaily)course.Repeating;
-                        pattern = new Recurrence.DailyPattern(reservation.DateStart, daily.interval);
-                    }
-                    if (course.Repeating.GetType().Equals(typeof(RepeatWeekly)))
-                    {
-                        RepeatWeekly weekly = (RepeatWeekly)course.Repeating;
-                        pattern = new Recurrence.WeeklyPattern(reservation.DateStart, weekly.interval, daysOfWeek);
-                    }
-                    if (course.Repeating.GetType().Equals(typeof(RepeatDaily)))
-                    {
-                        RepeatMonthly monthly = (RepeatMonthly)course.Repeating;
-                        pattern = new Recurrence.MonthlyPattern();
-                    }
-                    if (course.Repeating.GetType().Equals(typeof(RepeatDaily)))
-                    {
-                        RepeatYearly yearly = (RepeatYearly)course.Repeating;
-                        pattern = new Recurrence.YearlyPattern();
-                    }
-
-
-                    recurrence = AccountObjectFactory.createRecurrence(
-                        course.DateStart,
-                        course.Repeating.until,
-                        course.Repeating.count,
-                        pattern,
-                        course.Repeating.IsForever);
-                }
-
-                AccountObjectFactory.CreateCalendarObject(ewsConnector,
+                AccountObjectFactory.CreateCalendarObject(
+                    ewsConnector,
+                    getRaplaFolder(ewsConnector.getEWSService()),
                     course.name,
                     course.name,
                     course.DateStart,
                     course.DateEnd,
                     locationString,
-                    recurrence,
+                    createRecurrence(reservation),
                     roomAddresses,
                     attendantAddresses
                 );
