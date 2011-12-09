@@ -22,16 +22,16 @@ namespace ExchangeConnector
             Console.WriteLine("Message sent!");
         }
 
-        public static void CreateCalendarObject(EWSConnector connector, FolderId folderID, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
+        public static void CreateCalendarObject(EWSConnector connector, FolderId folderID,String id, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
         {
-            Console.WriteLine("Creating appointment...");
+            Console.WriteLine("Creating appointment " + id + "...");
 
             // Create the appointment.
             Appointment appointment = new Appointment(connector.getEWSService());
 
             // Set properties on the appointment. Add two required attendees and one optional attendee.
             appointment.Subject = subject;
-            appointment.Body = body;
+            appointment.Body = id;
             appointment.Start = start;
             appointment.End = end;
             appointment.Location = location;
@@ -50,7 +50,7 @@ namespace ExchangeConnector
             // Send the meeting request to all attendees and save a copy in the Sent Items folder.
             appointment.Save(folderID, SendInvitationsMode.SendToAllAndSaveCopy);
 
-            Console.WriteLine("Appointment createt!");
+            Console.WriteLine("Appointment " + id +" createt.");
         }
 
         public static Recurrence createRecurrence(DateTime start, DateTime end, int occurrences, Recurrence pattern, bool forever)

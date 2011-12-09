@@ -56,19 +56,23 @@ namespace RaplaConnector
             FolderView view = new FolderView(50);
             SearchFilter filter = new SearchFilter.IsEqualTo(FolderSchema.DisplayName, raplaCalendar);
 
-
             Folder parent = Folder.Bind(service, WellKnownFolderName.Calendar);
             FindFoldersResults result = parent.FindFolders(filter, view);
 
+            Console.WriteLine("Looking for Rapla-Calendar...");
+
             if (result.Folders.Count == 0)
             {
+                Console.WriteLine("Not found, creating new...");
                 CalendarFolder folder = new CalendarFolder(service);
                 folder.DisplayName = "Rapla";
                 folder.Save(WellKnownFolderName.Calendar);
+                Console.WriteLine("Rapla-Calendar created.");
                 return folder.Id;
             }
             else
             {
+                Console.WriteLine("Found.");
                 return result.Folders[0].Id;
             }
         }
@@ -115,6 +119,8 @@ namespace RaplaConnector
 
         private static void saveReservations(ExchangeConnector.EWSConnector ewsConnector)
         {
+            FolderId raplaId = getRaplaFolder(ewsConnector.getEWSService());
+
             foreach (Reservation reservation in parser.getReservations().Values)
             {
                 Course course = (Course)reservation;
@@ -142,7 +148,8 @@ namespace RaplaConnector
 
                 AccountObjectFactory.CreateCalendarObject(
                     ewsConnector,
-                    getRaplaFolder(ewsConnector.getEWSService()),
+                    raplaId,
+                    course.getID(),
                     course.name,
                     course.name,
                     course.DateStart,
