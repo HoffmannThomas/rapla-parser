@@ -6,7 +6,7 @@ namespace RaplaObjects.Persons
 {
     public class StudentsClass : Person
     {
-        String course_name;
+        public String course_name { get; private set; }
 
         public StudentsClass(String id, String course_name)
             : base(id)
@@ -14,9 +14,9 @@ namespace RaplaObjects.Persons
             this.course_name = course_name;
         }
 
-        public override void print()
+        public override string ToString()
         {
-            Console.WriteLine("    " + "StudentsClass: " + this.course_name);
+            return "StudentsClass: " + this.course_name;
         }
     }
 }

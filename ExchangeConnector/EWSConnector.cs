@@ -41,5 +41,11 @@ namespace ExchangeConnector
         {
             return this.fqdn;
         }
+
+        public FindItemsResults<Appointment> getAppointments()
+        {
+            CalendarFolder myCalendar = CalendarFolder.Bind(this.service, WellKnownFolderName.Calendar);
+            return myCalendar.FindAppointments(new CalendarView(DateTime.MinValue, DateTime.MaxValue));
+        }
     }
 }

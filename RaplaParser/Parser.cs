@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using RaplaObjects;
+using System.Collections.Generic;
 
 namespace RaplaParser
 {
@@ -18,7 +19,7 @@ namespace RaplaParser
             this.reservationParser = new ReservationParser(this.xmlDocument, resourceParser);
         }
 
-        public void printAppointments()
+        public void printReservations()
         {
 
             Console.WriteLine("Root element :" + this.xmlDocument.DocumentElement.Name);
@@ -29,6 +30,11 @@ namespace RaplaParser
                 appointment.print();
                 Console.WriteLine("-----------------------");
             }
+        }
+
+        public Dictionary<String, Reservation> getReservations()
+        {
+            return this.reservationParser.getReservationDictionary();
         }
     }
 }

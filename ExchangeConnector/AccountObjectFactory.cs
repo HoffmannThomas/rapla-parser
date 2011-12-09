@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Exchange.WebServices.Data;
+using System.Collections.Generic;
 
 namespace ExchangeConnector
 {
@@ -21,7 +22,7 @@ namespace ExchangeConnector
             Console.WriteLine("Message sent!");
         }
 
-        public static void CreateCalendarObject(EWSConnector connector, String subject, String body, DateTime start, DateTime end, String location)
+        public static void CreateCalendarObject(EWSConnector connector, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
         {
             Console.WriteLine("Creating appointment...");
 
@@ -34,11 +35,39 @@ namespace ExchangeConnector
             appointment.Start = start;
             appointment.End = end;
             appointment.Location = location;
+            appointment.Recurrence = recurrence;
+
+            foreach (EmailAddress roomAddress in roomAddresses)
+            {
+                appointment.Resources.Add(new Attendee(roomAddress));
+            }
+
+            foreach (EmailAddress attendantAddress in attendantAddresses)
+            {
+                appointment.Resources.Add(new Attendee(attendantAddress));
+            }
 
             // Send the meeting request to all attendees and save a copy in the Sent Items folder.
             appointment.Save(SendInvitationsMode.SendToAllAndSaveCopy);
 
             Console.WriteLine("Appointment createt!");
+        }
+
+        public static Recurrence createRecurrence(DateTime start, DateTime end, int occurrences, Recurrence pattern, bool forever)
+        {
+            pattern.EndDate = end;
+
+            if (occurrences != int.MinValue)
+            {
+                pattern.NumberOfOccurrences = occurrences;
+            }
+
+            if (forever == true)
+            {
+                pattern.NeverEnds();
+            }
+
+            return pattern;
         }
     }
 }

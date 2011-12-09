@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using RaplaObjects;
 using RaplaObjects.Reservations;
-using RaplaObjects.Utils;
+using RaplaObjects.Repeatings;
 using System.Xml;
 using ConfigurationManager;
 
@@ -60,41 +60,80 @@ namespace RaplaParser
 
         private Repeating parseRepeating(XmlElement element)
         {
-            RepeatingType repeatingType = RepeatingType.forever;
-            int count = int.MinValue;
-            DateTime until = DateTime.MinValue;
+            Repeating repeating = null;
+            int count = int.MaxValue;
+            DateTime until = DateTime.MaxValue;
+            List<DateTime> exceptions = new List<DateTime>();
+            bool isForever = false;
+            int interval = 1;
 
             try
             {
-                switch (element.GetElementsByTagName("rapla:repeating").Item(0).Attributes.GetNamedItem("type").Value)
-                {
-                    case "daily": repeatingType = RepeatingType.daily; break;
-                    case "weekly": repeatingType = RepeatingType.weekly; break;
-                    case "monthly": repeatingType = RepeatingType.monthly; break;
-                    case "yearly": repeatingType = RepeatingType.yearly; break;
-                }
-
                 try
                 {
                     count = int.Parse(element.GetElementsByTagName("rapla:repeating").Item(0).Attributes.GetNamedItem("number").Value);
-                    repeatingType = RepeatingType.forever;
+                    isForever = true;
                 }
-                catch (Exception e) { }
+                catch (Exception) { }
 
                 try
                 {
                     until = DateTime.Parse(element.GetElementsByTagName("rapla:date").Item(0).Attributes.GetNamedItem("date").Value);
-                    repeatingType = RepeatingType.forever;
+                    isForever = true;
                 }
-                catch (Exception e) { }
+                catch (Exception) { }
 
+                try
+                {
+                    interval = int.Parse(element.GetElementsByTagName("rapla:repeating").Item(0).Attributes.GetNamedItem("interval").Value);
+                }
+                catch (Exception) { }
+
+                foreach (XmlNode node in element.GetElementsByTagName("rapla:exception"))
+                {
+                    exceptions.Add(DateTime.Parse(node.Attributes.GetNamedItem("date").Value));
+                }
+
+                switch (element.GetElementsByTagName("rapla:repeating").Item(0).Attributes.GetNamedItem("type").Value)
+                {
+                    case "daily":
+                        repeating = new RepeatDaily(
+                            interval,
+                            until,
+                            count,
+                            exceptions,
+                            isForever
+                            ); break;
+
+                    case "weekly":
+                        repeating = new RepeatWeekly(
+                            interval,
+                            until,
+                            count,
+                            exceptions,
+                            isForever
+                            ); break;
+                    case "monthly":
+                        repeating = new RepeatMonthly(
+                            until,
+                            count,
+                            exceptions,
+                            isForever
+                            ); break;
+                    case "yearly":
+                        repeating = new RepeatYearly(
+                            until,
+                            count,
+                            exceptions,
+                            isForever
+                            ); break;
+                }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                repeatingType = RepeatingType.once;
             }
 
-            return new Repeating(repeatingType, until, count);
+            return repeating;
         }
 
         public Dictionary<String, Reservation> getReservationDictionary()
@@ -110,9 +149,18 @@ namespace RaplaParser
             {
                 String idString = node.Attributes.GetNamedItem("idref").Value;
 
-                Resource resource;
-                this.resourceParser.getResourceDictionary().TryGetValue(idString, out resource);
-                reservation.addResource(resource);
+                try
+                {
+                    reservation.addAttendant(this.resourceParser.personDictionary[idString]);
+                }
+                catch (KeyNotFoundException)
+                {
+                    try { reservation.addRoom(this.resourceParser.roomDictionary[idString]); }
+                    catch (KeyNotFoundException)
+                    {
+                        throw new Exception("Die ID " + idString + " ist nich definiert.");
+                    }
+                }
             }
         }
     }

@@ -6,8 +6,8 @@ namespace RaplaObjects.Persons
 {
     public class Lecturer : Person
     {
-        String forname;
-        String surname;
+        public String forname { get; private set; }
+        public String surname { get; private set; }
 
         public Lecturer(String id, String forname, String surname)
             : base(id)
@@ -16,9 +16,9 @@ namespace RaplaObjects.Persons
             this.surname = surname;
         }
 
-        public override void print()
+        public override string ToString()
         {
-            Console.WriteLine("    " + "Lecturer: " + this.forname + " " + this.surname);
+            return "Lecturer: " + this.forname + " " + this.surname;
         }
     }
 }

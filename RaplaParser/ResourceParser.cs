@@ -12,17 +12,15 @@ namespace RaplaParser
 {
     class ResourceParser
     {
-        private Dictionary<String, Resource> resourceDictionary = new Dictionary<String, Resource>();
+        public Dictionary<String, Person> personDictionary { get; private set;} 
+        public Dictionary<String, Room> roomDictionary { get; private set;} 
 
         public ResourceParser(XmlDocument xmlDocument)
         {
+            this.personDictionary = new Dictionary<String, Person>();
+            this.roomDictionary = new Dictionary<String, Room>();
             this.parseRooms(xmlDocument);
             this.parsePersons(xmlDocument);
-        }
-
-        public Dictionary<String, Resource> getResourceDictionary()
-        {
-            return this.resourceDictionary;
         }
 
         private void parseRooms(XmlDocument xmlDocument)
@@ -40,7 +38,7 @@ namespace RaplaParser
                         int.Parse(element.GetElementsByTagName(ConfigManager.getConfigString("rapla_room_number")).Item(0).ChildNodes.Item(0).Value)
                     );
 
-                    this.resourceDictionary.Add(courseRoom.getID(), courseRoom);
+                    this.roomDictionary.Add(courseRoom.getID(), courseRoom);
                 }
             }
         }
@@ -62,7 +60,7 @@ namespace RaplaParser
                         element.GetElementsByTagName(ConfigManager.getConfigString("rapla_lecturer_surname")).Item(0).ChildNodes.Item(0).Value
                      );
 
-                    resourceDictionary.Add(lecturer.getID(), lecturer);
+                    personDictionary.Add(lecturer.getID(), lecturer);
                 }
 
                 if (element.ChildNodes.Item(0).Name == ConfigManager.getConfigString("rapla_students_class_type_name"))
@@ -73,7 +71,7 @@ namespace RaplaParser
                         element.GetElementsByTagName(ConfigManager.getConfigString("rapla_students_class_name")).Item(0).ChildNodes.Item(0).Value
                     );
 
-                    resourceDictionary.Add(studentsClass.getID(), studentsClass);
+                    personDictionary.Add(studentsClass.getID(), studentsClass);
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace RaplaObjects.Rooms
 {
     public class CourseRoom : Room
     {
-        int number;
+        public int number { get; private set; }
 
         public CourseRoom(String id, int number)
             : base(id)
@@ -15,9 +15,9 @@ namespace RaplaObjects.Rooms
             this.number = number;
         }
 
-        public override void print()
+        public override string ToString()
         {
-            Console.WriteLine("    " + "CourseRoom" + ": " + this.number);
+            return "CourseRoom" + this.number.ToString();
         }
     }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -57,6 +57,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Exchange.WebServices, Version=14.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft.Exchange.WebServices.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -78,6 +82,10 @@
     <ProjectReference Include="..\ExchangeConnector\ExchangeConnector.csproj">
       <Project>{A8703B3E-A556-4295-A4DC-9B6FE5EAF1FC}</Project>
       <Name>ExchangeConnector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaplaObjects\RaplaObjects.csproj">
+      <Project>{C52886DB-3298-440B-A5FC-184A79036179}</Project>
+      <Name>RaplaObjects</Name>
     </ProjectReference>
     <ProjectReference Include="..\RaplaParser\RaplaParser.csproj">
       <Project>{0C68D1BC-5CE1-464A-878D-C4D8745F2AFD}</Project>

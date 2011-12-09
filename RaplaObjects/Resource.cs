@@ -2,18 +2,19 @@
 
 namespace RaplaObjects
 {
-    public abstract class Resource
+    public abstract class Resource : RaplaObject
     {
-        protected String id;
-
-        public Resource(String id)
+        public Resource(String id) :base(id)
         {
-            this.id = id;
         }
-        public abstract void print();
+        public override void print()
+        {
+            Console.WriteLine("    " + this.ToString());
+        }
 
-        public String getID(){
-            return this.id;
+        public override string ToString()
+        {
+            return this.id.ToString();
         }
     }
 }

@@ -1,45 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using RaplaObjects.Utils;
 
 namespace RaplaObjects
 {
-    public abstract class Reservation : Resource
+    public abstract class Reservation : RaplaObject
     {
-        private String owner;
-        private DateTime start;
-        private DateTime end;
-        private Repeating repeating;
-        private List<Resource> resources = new List<Resource>();
+        public String Owner { get; private set; }
+        public DateTime DateStart { get; private set; }
+        public DateTime DateEnd { get; private set; }
+        public Repeating Repeating { get; private set; }
+        public List<Room> Rooms { get; private set; }
+        public List<Person> Attendants { get; private set; }
 
-        public Reservation(String id, String owner, DateTime start, DateTime end, Repeating repeating)
-            : base(id)
+        public Reservation(String id, String owner, DateTime start, DateTime end, Repeating repeating) : base(id)
         {
-            this.owner = owner;
-            this.start = start;
-            this.end = end;
-            this.repeating = repeating;
+            this.Rooms = new List<Room>();
+            this.Attendants = new List<Person>();
+            this.Owner = owner;
+            this.DateStart = start;
+            this.DateEnd = end;
+            this.Repeating = repeating;
         }
 
         public override void print()
         {
-            Console.WriteLine("Owner : " + this.owner);
-            Console.WriteLine("Start-Date : " + this.start);
-            Console.WriteLine("End-Date : " + this.end);
+            Console.WriteLine("Owner : " + this.Owner);
+            Console.WriteLine("Start-Date : " + this.DateStart);
+            Console.WriteLine("End-Date : " + this.DateEnd);
 
-            this.repeating.print();
-
-            Console.WriteLine("Resources:");
-            foreach (Resource resource in this.resources)
+            if (this.Repeating != null)
             {
-                resource.print();
+                this.Repeating.print();
+            }
 
+            Console.WriteLine("Attendants:");
+            foreach (Person person in this.Attendants)
+            {
+                person.print();
+            }
+
+            Console.WriteLine("Rooms:");
+            foreach (Room room in this.Rooms)
+            {
+                room.print();
             }
         }
 
-        public void addResource(Resource resource)
+        public void addAttendant(Person person)
         {
-            this.resources.Add(resource);
+            this.Attendants.Add(person);
+        }
+
+        public void addRoom(Room room)
+        {
+            this.Rooms.Add(room);
+        }
+
+        public override string ToString()
+        {
+            return this.Owner + this.DateStart + this.DateEnd + Repeating.ToString();
         }
     }
 }
