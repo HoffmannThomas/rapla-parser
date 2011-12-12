@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 
-namespace RaplaConnector
+namespace Connector
 {
-    static class PasswordReader
+    public static class PasswordReader
     {
         public static string ReadPassword()
         {

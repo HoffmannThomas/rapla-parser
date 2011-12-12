@@ -9,7 +9,7 @@ namespace RaplaObjects
         }
         public override void print()
         {
-            Console.WriteLine("    " + this.ToString());
+            Logger.Log.message("    " + this.ToString());
         }
 
         public override string ToString()

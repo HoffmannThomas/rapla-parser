@@ -24,22 +24,22 @@ namespace RaplaObjects
 
         public override void print()
         {
-            Console.WriteLine("Owner : " + this.Owner);
-            Console.WriteLine("Start-Date : " + this.DateStart);
-            Console.WriteLine("End-Date : " + this.DateEnd);
+            Logger.Log.message("Owner : " + this.Owner);
+            Logger.Log.message("Start-Date : " + this.DateStart);
+            Logger.Log.message("End-Date : " + this.DateEnd);
 
             if (this.Repeating != null)
             {
                 this.Repeating.print();
             }
 
-            Console.WriteLine("Attendants:");
+            Logger.Log.message("Attendants:");
             foreach (Person person in this.Attendants)
             {
                 person.print();
             }
 
-            Console.WriteLine("Rooms:");
+            Logger.Log.message("Rooms:");
             foreach (Room room in this.Rooms)
             {
                 room.print();

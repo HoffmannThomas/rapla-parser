@@ -19,19 +19,6 @@ namespace RaplaParser
             this.reservationParser = new ReservationParser(this.xmlDocument, resourceParser);
         }
 
-        public void printReservations()
-        {
-
-            Console.WriteLine("Root element :" + this.xmlDocument.DocumentElement.Name);
-            Console.WriteLine("-----------------------");
-
-            foreach (Reservation appointment in this.reservationParser.getReservationDictionary().Values)
-            {
-                appointment.print();
-                Console.WriteLine("-----------------------");
-            }
-        }
-
         public Dictionary<String, Reservation> getReservations()
         {
             return this.reservationParser.getReservationDictionary();

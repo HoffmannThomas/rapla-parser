@@ -16,7 +16,7 @@ namespace RaplaObjects.Repeatings
         public override void print()
         {
             base.print();
-            Console.WriteLine("Interval: Every " + this.interval + " day");
+            Logger.Log.message("Interval: Every " + this.interval + " day");
         }
     }
 }

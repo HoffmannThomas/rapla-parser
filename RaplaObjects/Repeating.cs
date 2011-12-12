@@ -34,11 +34,11 @@ namespace RaplaObjects
 
         public virtual void print()
         {
-            Console.WriteLine("Repeat " + this.GetType().Name.ToString() + " (" + this.count + " times) until " + this.until);
+            Logger.Log.message("Repeat " + this.GetType().Name.ToString() + " (" + this.count + " times) until " + this.until);
 
             foreach (DateTime exception in this.exceptions)
             {
-                Console.WriteLine("Exception" + exception.ToString());
+                Logger.Log.message("Exception" + exception.ToString());
             }
         }
     }

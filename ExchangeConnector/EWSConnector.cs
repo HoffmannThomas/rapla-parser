@@ -24,12 +24,12 @@ namespace ExchangeConnector
                     return true;
                 };
 
-            Console.WriteLine("Connecting...");
+            Logger.Log.message("Connecting...");
 
             service.Credentials = new WebCredentials(user, password);
             service.AutodiscoverUrl(user + "@" + fqdn);
 
-            Console.WriteLine("Connection established");
+            Logger.Log.message("Connection established");
         }
 
         public ExchangeService getEWSService()
@@ -40,12 +40,6 @@ namespace ExchangeConnector
         public String getFQDN()
         {
             return this.fqdn;
-        }
-
-        public FindItemsResults<Appointment> getAppointments()
-        {
-            CalendarFolder myCalendar = CalendarFolder.Bind(this.service, WellKnownFolderName.Calendar);
-            return myCalendar.FindAppointments(new CalendarView(DateTime.MinValue, DateTime.MaxValue));
         }
     }
 }
