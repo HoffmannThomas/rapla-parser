@@ -63,7 +63,7 @@ namespace Connector
                         RaplaConnectorTools.saveReservation(service, raplaFolderId, parser.getReservations()[id]);
                     }
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(10000);
             }
             Logger.Log.message("Thread for user " + user + " terminated.");
         }
