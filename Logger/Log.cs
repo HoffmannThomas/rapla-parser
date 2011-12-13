@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using ConfigurationManager;
 
 namespace Logger
 {
@@ -9,7 +7,7 @@ namespace Logger
     {
         public static void message(String msg)
         {
-            System.IO.StreamWriter sw = System.IO.File.AppendText("log.txt");
+            System.IO.StreamWriter sw = System.IO.File.AppendText(ConfigManager.getConfigString("log_file"));
             try
             {
                 string logLine = System.String.Format(

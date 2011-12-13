@@ -12,9 +12,9 @@ namespace RaplaParser
 
         private XmlDocument xmlDocument = new XmlDocument();
 
-        public Parser(String sourceURL)
+        public Parser(XmlDocument raplaData)
         {
-            xmlDocument.Load(new XmlTextReader(sourceURL));
+            this.xmlDocument = raplaData;
             this.resourceParser = new ResourceParser(this.xmlDocument);
             this.reservationParser = new ReservationParser(this.xmlDocument, resourceParser);
         }
