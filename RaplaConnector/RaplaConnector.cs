@@ -21,13 +21,13 @@ namespace Connector
 
         public void stopConnector()
         {
-            Logger.Log.message("Terminating thread...");
+            Logger.Log.message("Terminating thread..");
             _shouldStop = true;
         }
 
         public void startConnector()
         {
-            Logger.Log.message("thread for user " + user + " working...");
+            Logger.Log.message("Thread for user " + user + " working..");
 
             this.connector = null;
 
@@ -44,7 +44,7 @@ namespace Connector
 
                 Thread.Sleep(10000);
             }
-            Logger.Log.message("Thread for user " + user + " terminated.");
+            Logger.Log.message("Thread for user " + user + " terminated");
         }
 
         public void parse(XmlDocument raplaData)
@@ -58,7 +58,7 @@ namespace Connector
             {
                 if (appointments.ContainsKey(id))
                 {
-                    Logger.Log.message("Reservation ID " + id + " is already present.");
+                    Logger.Log.message("Reservation ID " + id + " is already present");
                 }
                 else
                 {
