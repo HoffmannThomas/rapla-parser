@@ -58,7 +58,10 @@
     <Compile Include="Room.cs" />
     <Compile Include="Persons\StudentsClass.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="cd_repeating.cd" />
+    <None Include="cd_objects.cd" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfigurationManager\ConfigurationManager.csproj">
       <Project>{6CEDADE5-B587-4EA9-A8BD-106C049A1DD1}</Project>

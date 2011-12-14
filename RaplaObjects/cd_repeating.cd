@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="RaplaObjects.Repeating">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAAAABAAABAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repeating.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaplaObjects.Repeatings.RepeatDaily">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repeatings\RepeatDaily.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaplaObjects.Repeatings.RepeatMonthly">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repeatings\RepeatMonthly.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaplaObjects.Repeatings.RepeatWeekly">
+    <Position X="5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repeatings\RepeatWeekly.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaplaObjects.Repeatings.RepeatYearly">
+    <Position X="7.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repeatings\RepeatYearly.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
