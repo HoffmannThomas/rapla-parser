@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="C:\WebService" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Deploy" publishMethod="FileSystem" replaceMatchingFiles="True" userName="thomas" savePWD="False" userPWD="" SelectedForPublish="False">
-    <file relUrl="Web.config" publishTime="12/14/2011 14:53:56" />
-    <file relUrl="bin/WebService.dll" publishTime="12/14/2011 14:50:40" />
-    <file relUrl="bin/Microsoft.Exchange.WebServices.dll" publishTime="11/15/2010 03:12:04" />
-    <file relUrl="bin/RaplaConnector.pdb" publishTime="12/14/2011 14:50:38" />
-    <file relUrl="bin/ExchangeConnector.pdb" publishTime="12/14/2011 14:50:17" />
-    <file relUrl="RaplaService.asmx" publishTime="12/14/2011 13:04:34" />
-    <file relUrl="bin/Logger.dll" publishTime="12/14/2011 14:50:16" />
-    <file relUrl="bin/Microsoft.Exchange.WebServices.xml" publishTime="11/15/2010 01:36:26" />
-    <file relUrl="bin/Logger.pdb" publishTime="12/14/2011 14:50:16" />
-    <file relUrl="bin/RaplaObjects.pdb" publishTime="12/14/2011 14:50:16" />
-    <file relUrl="bin/WebService.pdb" publishTime="12/14/2011 14:50:40" />
-    <file relUrl="bin/RaplaObjects.dll" publishTime="12/14/2011 14:50:16" />
-    <file relUrl="bin/ExchangeConnector.dll" publishTime="12/14/2011 14:50:17" />
-    <file relUrl="bin/ConfigurationManager.dll" publishTime="12/14/2011 14:50:15" />
-    <file relUrl="bin/RaplaParser.dll" publishTime="12/14/2011 14:50:18" />
-    <file relUrl="bin/RaplaConnector.dll" publishTime="12/14/2011 14:50:39" />
-    <file relUrl="bin/ConfigurationManager.pdb" publishTime="12/14/2011 14:50:15" />
-    <file relUrl="bin/RaplaParser.pdb" publishTime="12/14/2011 14:50:17" />
+  <publishProfile publishUrl="C:\WebService" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Deploy" publishMethod="FileSystem" replaceMatchingFiles="True" userName="thomas" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Web.config" publishTime="12/14/2011 18:19:22" />
+    <file relUrl="bin/WebService.dll" publishTime="12/14/2011 18:19:21" />
+    <file relUrl="bin/ConfigurationManager.pdb" publishTime="12/14/2011 18:19:19" />
+    <file relUrl="bin/Microsoft.Exchange.WebServices.dll" publishTime="12/07/2011 18:46:52" />
+    <file relUrl="bin/RaplaConnector.pdb" publishTime="12/14/2011 18:19:21" />
+    <file relUrl="bin/ExchangeConnector.pdb" publishTime="12/14/2011 18:19:20" />
+    <file relUrl="RaplaService.asmx" publishTime="12/13/2011 13:41:55" />
+    <file relUrl="bin/Logger.dll" publishTime="12/14/2011 18:19:19" />
+    <file relUrl="bin/RaplaObjects.pdb" publishTime="12/14/2011 18:19:19" />
+    <file relUrl="bin/Logger.pdb" publishTime="12/14/2011 18:19:19" />
+    <file relUrl="bin/WebService.pdb" publishTime="12/14/2011 18:19:21" />
+    <file relUrl="bin/Microsoft.Exchange.WebServices.xml" publishTime="12/07/2011 18:46:52" />
+    <file relUrl="bin/RaplaObjects.dll" publishTime="12/14/2011 18:19:20" />
+    <file relUrl="bin/ExchangeConnector.dll" publishTime="12/14/2011 18:19:20" />
+    <file relUrl="bin/ConfigurationManager.dll" publishTime="12/14/2011 18:19:19" />
+    <file relUrl="bin/RaplaParser.pdb" publishTime="12/14/2011 18:19:20" />
+    <file relUrl="bin/RaplaParser.dll" publishTime="12/14/2011 18:19:20" />
+    <file relUrl="bin/RaplaConnector.dll" publishTime="12/14/2011 18:19:21" />
   </publishProfile>
 </publishData>
