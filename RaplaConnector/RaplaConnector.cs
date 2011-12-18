@@ -41,7 +41,6 @@ namespace Connector
 
         public void parse(XmlDocument raplaData)
         {
-
             Parser parser = new Parser(raplaData);
 
             Dictionary<string, Appointment> appointments = RaplaConnectorTools.getEWSAppointments(service, raplaFolderId);
