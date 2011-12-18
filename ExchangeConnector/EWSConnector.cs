@@ -13,7 +13,6 @@ namespace ExchangeConnector
 
         public EWSConnector(String fqdn, String user, String password)
         {
-
             this.service = new ExchangeService();
             this.fqdn = fqdn;
 
@@ -28,8 +27,8 @@ namespace ExchangeConnector
 
             service.Credentials = new WebCredentials(user, password);
             service.AutodiscoverUrl(user + "@" + fqdn);
-
             Logger.Log.message("Connection established");
+
         }
 
         public ExchangeService getEWSService()

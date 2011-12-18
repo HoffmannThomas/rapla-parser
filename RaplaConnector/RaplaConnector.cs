@@ -29,14 +29,6 @@ namespace Connector
         {
             Logger.Log.message("Thread for user " + user + " working..");
 
-            this.connector = null;
-
-            this.connector = new ExchangeConnector.EWSConnector(ConfigManager.getConfigString("fqdn"), user, password);
-
-            this.service = connector.getEWSService();
-
-            raplaFolderId = RaplaConnectorTools.getRaplaFolder(service);
-
             while (!_shouldStop)
             {
                 // Dictionary<string, Appointment> appointments = RaplaConnectorTools.getEWSAppointments(service, raplaFolderId);
@@ -73,6 +65,14 @@ namespace Connector
         {
             this.user = user;
             this.password = password;
+
+            this.connector = null;
+
+            this.connector = new ExchangeConnector.EWSConnector(ConfigManager.getConfigString("fqdn"), user, password);
+
+            this.service = connector.getEWSService();
+
+            raplaFolderId = RaplaConnectorTools.getRaplaFolder(service);
         }
     }
 }
