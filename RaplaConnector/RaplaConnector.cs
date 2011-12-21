@@ -39,7 +39,7 @@ namespace Connector
             Logger.Log.message("Thread for user " + user + " terminated");
         }
 
-        public void parse(XmlDocument raplaData)
+        public void saveReservation(XmlDocument raplaData)
         {
             Parser parser = new Parser(raplaData);
 
@@ -55,9 +55,24 @@ namespace Connector
                 {
                     Logger.Log.message("New Reservation found:");
                     parser.getReservations()[id].print();
-                    RaplaConnectorTools.saveReservation(service, raplaFolderId, parser.getReservations()[id]);
+                    RaplaConnectorTools.SaveReservation(service, raplaFolderId, parser.getReservations()[id]);
                 }
             }
+        }
+
+        public void updateReservation(XmlDocument raplaData)
+        {
+            Parser parser = new Parser(raplaData);
+
+            foreach (String id in parser.getReservations().Keys)
+            {
+                RaplaConnectorTools.UpdateReservation(this.service, this.raplaFolderId, parser.getReservations()[id]);
+            }
+        }
+
+        public void deleteReservation(String id)
+        {
+            RaplaConnectorTools.DeleteReservation(this.service, this.raplaFolderId, id);
         }
 
         public RaplaConnector(String user, String password)

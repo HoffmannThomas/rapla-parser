@@ -32,11 +32,33 @@ namespace WebService
         }
 
         [WebMethod(Description = "")]
-        public String parseRaplaXML(XmlDocument raplaXML, String user)
+        public String CreateAppointment(XmlDocument raplaXML, String user)
         {
             try
             {
-                connectorThreads[user].parse(raplaXML);
+                connectorThreads[user].saveReservation(raplaXML);
+                return "Data computed";
+            }
+            catch (Exception e) { return e.Message; }
+        }
+
+        [WebMethod(Description = "")]
+        public String UpdateAppointment(XmlDocument raplaXML, String user)
+        {
+            try
+            {
+                connectorThreads[user].updateReservation(raplaXML);
+                return "Data computed";
+            }
+            catch (Exception e) { return e.Message; }
+        }
+
+        [WebMethod(Description = "")]
+        public String DeleteAppointment(String id, String user)
+        {
+            try
+            {
+                connectorThreads[user].deleteReservation(id);
                 return "Data computed";
             }
             catch (Exception e) { return e.Message; }
@@ -50,7 +72,7 @@ namespace WebService
                 XmlDocument doc = new XmlDocument();
                 doc.Load(ConfigManager.getConfigString("rapla_data_path"));
 
-                connectorThreads[user].parse(doc);
+                connectorThreads[user].saveReservation(doc);
                 return "Data computed";
             }
             catch (Exception e) { return e.Message; }

@@ -81,7 +81,7 @@ namespace Connector
             return recurrence;
         }
 
-        public static void saveReservation(ExchangeService service, FolderId raplaFolderId, Reservation reservation)
+        public static void SaveReservation(ExchangeService service, FolderId raplaFolderId, Reservation reservation)
         {
             Course course = (Course)reservation;
 
@@ -122,11 +122,28 @@ namespace Connector
 
         }
 
+        public static void UpdateReservation(ExchangeService service, FolderId folderID, Reservation reservation)
+        {
+            DeleteReservation(service, folderID, reservation.getID());
+            SaveReservation(service, folderID, reservation);
+        }
+        public static void DeleteReservation(ExchangeService service, FolderId folderID, String id)
+        {
+            SearchFilter filter = new SearchFilter.ContainsSubstring(AppointmentSchema.Body, id);
+
+            CalendarFolder calendar = CalendarFolder.Bind(service, folderID);
+
+            ItemView itemView = new ItemView(5);
+
+            FindItemsResults<Item> items = calendar.FindItems(filter, itemView);
+
+            items.Items[0].Delete(DeleteMode.HardDelete);
+
+        }
+
         public static Dictionary<String, Appointment> getEWSAppointments(ExchangeService service, FolderId folderID)
         {
             Dictionary<String, Appointment> appointmentDictionary = new Dictionary<String, Appointment>();
-
-            ItemView view = new ItemView(1000);
 
             CalendarFolder calendar = CalendarFolder.Bind(service, folderID);
 

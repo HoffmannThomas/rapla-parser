@@ -22,7 +22,7 @@ namespace ExchangeConnector
             Logger.Log.message("Message sent!");
         }
 
-        public static void CreateCalendarObject(ExchangeService service, FolderId folderID,String id, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
+        public static void CreateCalendarObject(ExchangeService service, FolderId folderID, String id, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
         {
             Logger.Log.message("Creating appointment " + id + "...");
 
