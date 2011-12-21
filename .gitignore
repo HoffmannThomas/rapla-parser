@@ -9,3 +9,5 @@ obj/
 .vspscc
 .log
 .bak
+WebService/WebService.Publish.xml
+RaplaParser.suo

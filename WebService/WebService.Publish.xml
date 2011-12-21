@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
   <publishProfile publishUrl="C:\WebService" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Deploy" publishMethod="FileSystem" replaceMatchingFiles="True" userName="thomas" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="Web.config" publishTime="12/14/2011 18:19:22" />
-    <file relUrl="bin/WebService.dll" publishTime="12/14/2011 18:19:21" />
-    <file relUrl="bin/ConfigurationManager.pdb" publishTime="12/14/2011 18:19:19" />
+    <file relUrl="Web.config" publishTime="12/21/2011 16:50:52" />
+    <file relUrl="bin/WebService.dll" publishTime="12/21/2011 16:40:44" />
+    <file relUrl="bin/ConfigurationManager.pdb" publishTime="12/21/2011 16:40:42" />
     <file relUrl="bin/Microsoft.Exchange.WebServices.dll" publishTime="12/07/2011 18:46:52" />
-    <file relUrl="bin/RaplaConnector.pdb" publishTime="12/14/2011 18:19:21" />
-    <file relUrl="bin/ExchangeConnector.pdb" publishTime="12/14/2011 18:19:20" />
+    <file relUrl="bin/RaplaConnector.pdb" publishTime="12/21/2011 16:40:44" />
+    <file relUrl="bin/ExchangeConnector.pdb" publishTime="12/21/2011 16:40:43" />
     <file relUrl="RaplaService.asmx" publishTime="12/13/2011 13:41:55" />
-    <file relUrl="bin/Logger.dll" publishTime="12/14/2011 18:19:19" />
-    <file relUrl="bin/RaplaObjects.pdb" publishTime="12/14/2011 18:19:19" />
-    <file relUrl="bin/Logger.pdb" publishTime="12/14/2011 18:19:19" />
-    <file relUrl="bin/WebService.pdb" publishTime="12/14/2011 18:19:21" />
+    <file relUrl="bin/Logger.dll" publishTime="12/21/2011 16:40:42" />
+    <file relUrl="bin/RaplaObjects.pdb" publishTime="12/21/2011 16:40:43" />
+    <file relUrl="bin/Logger.pdb" publishTime="12/21/2011 16:40:42" />
+    <file relUrl="bin/WebService.pdb" publishTime="12/21/2011 16:40:44" />
     <file relUrl="bin/Microsoft.Exchange.WebServices.xml" publishTime="12/07/2011 18:46:52" />
-    <file relUrl="bin/RaplaObjects.dll" publishTime="12/14/2011 18:19:20" />
-    <file relUrl="bin/ExchangeConnector.dll" publishTime="12/14/2011 18:19:20" />
-    <file relUrl="bin/ConfigurationManager.dll" publishTime="12/14/2011 18:19:19" />
-    <file relUrl="bin/RaplaParser.pdb" publishTime="12/14/2011 18:19:20" />
-    <file relUrl="bin/RaplaParser.dll" publishTime="12/14/2011 18:19:20" />
-    <file relUrl="bin/RaplaConnector.dll" publishTime="12/14/2011 18:19:21" />
+    <file relUrl="bin/RaplaObjects.dll" publishTime="12/21/2011 16:40:43" />
+    <file relUrl="bin/ExchangeConnector.dll" publishTime="12/21/2011 16:40:43" />
+    <file relUrl="bin/ConfigurationManager.dll" publishTime="12/21/2011 16:40:42" />
+    <file relUrl="bin/RaplaParser.pdb" publishTime="12/21/2011 16:40:43" />
+    <file relUrl="bin/RaplaParser.dll" publishTime="12/21/2011 16:40:43" />
+    <file relUrl="bin/RaplaConnector.dll" publishTime="12/21/2011 16:40:44" />
   </publishProfile>
 </publishData>
