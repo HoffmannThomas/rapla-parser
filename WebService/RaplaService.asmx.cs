@@ -16,49 +16,50 @@ namespace WebService
     [System.ComponentModel.ToolboxItem(false)]
     public class RaplaService : System.Web.Services.WebService
     {
-        static Dictionary<String, RaplaConnector> connectorThreads = new Dictionary<string, RaplaConnector>();
+        static Dictionary<String, RaplaConnector> connectors = new Dictionary<String, RaplaConnector>();
+        static UserManager userManager = new UserManager();
 
-        [WebMethod(Description = "")]
-        public String showWorker()
+        public RaplaService()
         {
-            String workers = "";
-
-            foreach (String user in connectorThreads.Keys)
+            foreach (User user in userManager.dictionary.Values)
             {
-                workers += user + "\r\n";
+                if (connectors.ContainsKey(user.rapla_user_id) == false)
+                {
+                    connectors.Add(user.rapla_user_id, new RaplaConnector(user.exchange_user_name, user.getPassword()));
+                }
             }
-
-            return workers;
         }
 
         [WebMethod(Description = "")]
-        public String CreateAppointment(XmlDocument raplaXML, String user)
+        public String showConnections()
+        {
+            String connections = "";
+
+            foreach (String user in connectors.Keys)
+            {
+                connections += user + "\r\n";
+            }
+
+            return connections;
+        }
+
+        [WebMethod(Description = "")]
+        public String SaveAppointment(String rapla_user_id, XmlDocument raplaXML)
         {
             try
             {
-                connectorThreads[user].saveReservation(raplaXML);
+                connectors[rapla_user_id].saveReservation(raplaXML);
                 return "Data computed";
             }
             catch (Exception e) { return e.Message; }
         }
 
         [WebMethod(Description = "")]
-        public String UpdateAppointment(XmlDocument raplaXML, String user)
+        public String DeleteAppointment(String rapla_user_id, String exchange_id)
         {
             try
             {
-                connectorThreads[user].updateReservation(raplaXML);
-                return "Data computed";
-            }
-            catch (Exception e) { return e.Message; }
-        }
-
-        [WebMethod(Description = "")]
-        public String DeleteAppointment(String id, String user)
-        {
-            try
-            {
-                connectorThreads[user].deleteReservation(id);
+                connectors[rapla_user_id].deleteReservation(exchange_id);
                 return "Data computed";
             }
             catch (Exception e) { return e.Message; }
@@ -72,44 +73,34 @@ namespace WebService
                 XmlDocument doc = new XmlDocument();
                 doc.Load(ConfigManager.getConfigString("rapla_data_path"));
 
-                connectorThreads[user].saveReservation(doc);
+                connectors[user].saveReservation(doc);
                 return "Data computed";
             }
             catch (Exception e) { return e.Message; }
         }
 
-
-
         [WebMethod(Description = "")]
-        public String stopWorker(String user)
+        public int registerUser(String rapla_user_id, String exchange_user_name, String password)
         {
-            try
-            {
-                connectorThreads[user].stopConnector();
-                connectorThreads.Remove(user);
-                return "Worker for user " + user + " stopped.";
-            }
-            catch (Exception e) { return e.Message; }
+            User user = new User(rapla_user_id, exchange_user_name, password, true);
+
+            connectors.Add(user.rapla_user_id, new RaplaConnector(user.exchange_user_name, user.getPassword()));
+            userManager.addUser(user);
+
+            return 0;
+        }
+        [WebMethod(Description = "")]
+        public int unregisterUser(String rapla_user_id)
+        {
+            userManager.removeUser(rapla_user_id);
+            connectors.Remove(rapla_user_id);
+            return 0;
         }
 
         [WebMethod(Description = "")]
-        public String startNewWorker(String user, String password)
+        public XmlDocument getLastModified(String rapla_user_id, String last_modified)
         {
-            try
-            {
-                RaplaConnector connector = new RaplaConnector(user, password);
-
-                connectorThreads.Add(user, connector);
-
-                Thread workerThread = new Thread(connector.startConnector);
-
-                workerThread.Start();
-                while (!workerThread.IsAlive) ;
-                Thread.Sleep(1);
-
-                return "Worker for user " + user + " created.";
-            }
-            catch (Exception e) { return e.Message; }
+            return new XmlDocument();
         }
     }
 }

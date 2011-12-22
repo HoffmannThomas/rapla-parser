@@ -6,7 +6,6 @@ namespace ExchangeConnector
 {
     public static class AccountObjectFactory
     {
-
         public static void SendEmail(EWSConnector connector, String subject, String body, String recipient)
         {
             Logger.Log.message("Sending message...");
@@ -22,7 +21,7 @@ namespace ExchangeConnector
             Logger.Log.message("Message sent!");
         }
 
-        public static void CreateCalendarObject(ExchangeService service, FolderId folderID, String id, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
+        public static ItemId CreateCalendarObject(ExchangeService service, String id, String subject, String body, DateTime start, DateTime end, String location, Recurrence recurrence, List<EmailAddress> roomAddresses, List<EmailAddress> attendantAddresses)
         {
             Logger.Log.message("Creating appointment " + id + "...");
 
@@ -31,9 +30,9 @@ namespace ExchangeConnector
 
             // Set properties on the appointment. Add two required attendees and one optional attendee.
             appointment.Subject = subject;
-            appointment.Body = id;
             appointment.Start = start;
             appointment.End = end;
+            appointment.Body = body;
             appointment.Location = location;
             appointment.Recurrence = recurrence;
 
@@ -48,9 +47,10 @@ namespace ExchangeConnector
             }
 
             // Send the meeting request to all attendees and save a copy in the Sent Items folder.
-            appointment.Save(folderID, SendInvitationsMode.SendToAllAndSaveCopy);
+            appointment.Save(SendInvitationsMode.SendToNone);
 
-            Logger.Log.message("Appointment " + id +" createt.");
+            Logger.Log.message("Appointment " + id + " createt.");
+            return appointment.Id;
         }
 
         public static Recurrence createRecurrence(DateTime start, DateTime end, int occurrences, Recurrence pattern, bool forever)

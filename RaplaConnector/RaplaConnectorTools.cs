@@ -14,32 +14,32 @@ namespace Connector
 {
     public static class RaplaConnectorTools
     {
-        public static FolderId getRaplaFolder(ExchangeService service)
-        {
-            string raplaCalendar = "Rapla";
-            FolderView view = new FolderView(50);
-            SearchFilter filter = new SearchFilter.IsEqualTo(FolderSchema.DisplayName, raplaCalendar);
+        //public static FolderId getRaplaFolder(ExchangeService service)
+        //{
+        //    string raplaCalendar = "Rapla";
+        //    FolderView view = new FolderView(50);
+        //    SearchFilter filter = new SearchFilter.IsEqualTo(FolderSchema.DisplayName, raplaCalendar);
 
-            Folder parent = Folder.Bind(service, WellKnownFolderName.Calendar);
-            FindFoldersResults result = parent.FindFolders(filter, view);
+        //    Folder parent = Folder.Bind(service, WellKnownFolderName.Calendar);
+        //    FindFoldersResults result = parent.FindFolders(filter, view);
 
-            Logger.Log.message("Looking for Rapla-Calendar...");
+        //    Logger.Log.message("Looking for Rapla-Calendar...");
 
-            if (result.Folders.Count == 0)
-            {
-                Logger.Log.message("Not found, creating new...");
-                CalendarFolder folder = new CalendarFolder(service);
-                folder.DisplayName = "Rapla";
-                folder.Save(WellKnownFolderName.Calendar);
-                Logger.Log.message("Rapla-Calendar created.");
-                return folder.Id;
-            }
-            else
-            {
-                Logger.Log.message("Found.");
-                return result.Folders[0].Id;
-            }
-        }
+        //    if (result.Folders.Count == 0)
+        //    {
+        //        Logger.Log.message("Not found, creating new...");
+        //        CalendarFolder folder = new CalendarFolder(service);
+        //        folder.DisplayName = "Rapla";
+        //        folder.Save(WellKnownFolderName.Calendar);
+        //        Logger.Log.message("Rapla-Calendar created.");
+        //        return folder.Id;
+        //    }
+        //    else
+        //    {
+        //        Logger.Log.message("Found.");
+        //        return result.Folders[0].Id;
+        //    }
+        //}
 
         private static Recurrence createRecurrence(Reservation reservation)
         {
@@ -81,7 +81,7 @@ namespace Connector
             return recurrence;
         }
 
-        public static void SaveReservation(ExchangeService service, FolderId raplaFolderId, Reservation reservation)
+        public static ItemId SaveReservation(ExchangeService service, Reservation reservation)
         {
             Course course = (Course)reservation;
 
@@ -106,12 +106,11 @@ namespace Connector
                 }
             }
 
-            AccountObjectFactory.CreateCalendarObject(
+            return AccountObjectFactory.CreateCalendarObject(
                 service,
-                raplaFolderId,
                 course.getID(),
                 course.name,
-                course.name,
+                ConfigManager.getConfigString("appointment_body"),
                 course.DateStart,
                 course.DateEnd,
                 locationString,
@@ -119,49 +118,42 @@ namespace Connector
                 roomAddresses,
                 attendantAddresses
             );
-
         }
 
-        public static void UpdateReservation(ExchangeService service, FolderId folderID, Reservation reservation)
+        public static ItemId UpdateReservation(ExchangeService service, Reservation reservation)
         {
-            DeleteReservation(service, folderID, reservation.getID());
-            SaveReservation(service, folderID, reservation);
+            DeleteReservation(service, reservation.getID());
+            return SaveReservation(service, reservation);
         }
-        public static void DeleteReservation(ExchangeService service, FolderId folderID, String id)
+        public static void DeleteReservation(ExchangeService service, String itemId)
         {
-            SearchFilter filter = new SearchFilter.ContainsSubstring(AppointmentSchema.Body, id);
-
-            CalendarFolder calendar = CalendarFolder.Bind(service, folderID);
-
-            ItemView itemView = new ItemView(5);
-
-            FindItemsResults<Item> items = calendar.FindItems(filter, itemView);
-
-            items.Items[0].Delete(DeleteMode.HardDelete);
-
+            ItemId id = new ItemId(itemId);
+            List<ItemId> ids = new List<ItemId>();
+            ids.Add(id);
+            service.DeleteItems(ids, DeleteMode.HardDelete, SendCancellationsMode.SendToNone, AffectedTaskOccurrence.AllOccurrences);
         }
 
-        public static Dictionary<String, Appointment> getEWSAppointments(ExchangeService service, FolderId folderID)
+        public static List<Appointment> getEWSAppointments(ExchangeService service, FolderId folderID)
         {
-            Dictionary<String, Appointment> appointmentDictionary = new Dictionary<String, Appointment>();
+            List<Appointment> appointments = new List<Appointment>();
 
             CalendarFolder calendar = CalendarFolder.Bind(service, folderID);
 
             CalendarView calView = new CalendarView(DateTime.Today.AddMonths(-6), DateTime.Today.AddMonths(6));
 
-            FindItemsResults<Appointment> appointments = calendar.FindAppointments(calView);
+            FindItemsResults<Appointment> appointmentResults = calendar.FindAppointments(calView);
 
-            if (appointments.TotalCount != 0)
+            if (appointmentResults.TotalCount != 0)
             {
                 service.LoadPropertiesForItems(appointments, new PropertySet(BasePropertySet.FirstClassProperties) { RequestedBodyType = BodyType.Text });
 
                 foreach (Appointment appointment in appointments)
                 {
-                    appointmentDictionary.Add(Regex.Replace(appointment.Body, "\r\n", ""), appointment);
+                    appointments.Add(appointment);
                 }
             }
 
-            return appointmentDictionary;
+            return appointments;
         }
     }
 }

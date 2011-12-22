@@ -27,6 +27,7 @@ namespace ExchangeConnector
 
             service.Credentials = new WebCredentials(user, password);
             service.AutodiscoverUrl(user + "@" + fqdn);
+
             Logger.Log.message("Connection established");
         }
 
