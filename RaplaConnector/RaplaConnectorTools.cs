@@ -133,24 +133,15 @@ namespace Connector
             service.DeleteItems(ids, DeleteMode.HardDelete, SendCancellationsMode.SendToNone, AffectedTaskOccurrence.AllOccurrences);
         }
 
-        public static List<Appointment> getEWSAppointments(ExchangeService service, FolderId folderID)
+        public static List<Appointment> getEWSAppointments(ExchangeService service, SearchFilter filter)
         {
             List<Appointment> appointments = new List<Appointment>();
 
-            CalendarFolder calendar = CalendarFolder.Bind(service, folderID);
+            ItemView view = new ItemView(1000);
+            FindItemsResults<Item> items = service.FindItems(WellKnownFolderName.Calendar, filter, view);
 
-            CalendarView calView = new CalendarView(DateTime.Today.AddMonths(-6), DateTime.Today.AddMonths(6));
-
-            FindItemsResults<Appointment> appointmentResults = calendar.FindAppointments(calView);
-
-            if (appointmentResults.TotalCount != 0)
-            {
-                service.LoadPropertiesForItems(appointments, new PropertySet(BasePropertySet.FirstClassProperties) { RequestedBodyType = BodyType.Text });
-
-                foreach (Appointment appointment in appointments)
-                {
-                    appointments.Add(appointment);
-                }
+            foreach (Appointment appointment in items) {
+                appointments.Add(appointment);
             }
 
             return appointments;

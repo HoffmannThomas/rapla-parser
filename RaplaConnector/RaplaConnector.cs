@@ -4,6 +4,7 @@ using RaplaParser;
 using ExchangeConnector;
 using Microsoft.Exchange.WebServices.Data;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace Connector
 {
@@ -13,8 +14,6 @@ namespace Connector
         ExchangeService service;
         String user;
         String password;
-
-        // Dictionary<string, Appointment> appointments = RaplaConnectorTools.getEWSAppointments(service, raplaFolderId);
 
         public void saveReservation(XmlDocument raplaData)
         {
@@ -26,13 +25,37 @@ namespace Connector
                 {
                     Logger.Log.message("New Reservation found:");
                     parser.getReservations()[id].print();
-                    RaplaConnectorTools.SaveReservation(service, parser.getReservations()[id]);                    
+                    RaplaConnectorTools.SaveReservation(service, parser.getReservations()[id]);
                 }
                 else
                 {
                     RaplaConnectorTools.UpdateReservation(this.service, parser.getReservations()[id]);
                 }
             }
+        }
+
+        public XmlDocument getLastModified(DateTime time)
+        {
+
+            XmlDocument results = new XmlDocument();
+            XmlDeclaration dec = results.CreateXmlDeclaration("1.0", null, null);
+            results.AppendChild(dec);
+            XmlElement root = results.CreateElement("results");
+            results.AppendChild(root);
+
+            SearchFilter filter = new SearchFilter.IsGreaterThan(AppointmentSchema.LastModifiedTime, time);
+
+            List<Appointment> appointments = RaplaConnectorTools.getEWSAppointments(service, filter);
+
+            foreach (Appointment appointment in appointments)
+            {
+                XmlElement reservation = results.CreateElement("reservation");
+                reservation.SetAttribute("id", appointment.Id.ToString());
+                root.AppendChild(reservation);
+            }
+
+            return results;
+
         }
 
         public void deleteReservation(String id)

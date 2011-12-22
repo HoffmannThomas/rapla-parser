@@ -25,7 +25,7 @@ namespace WebService
             {
                 if (connectors.ContainsKey(user.rapla_user_id) == false)
                 {
-                    connectors.Add(user.rapla_user_id, new RaplaConnector(user.exchange_user_name, user.getPassword()));
+                    connectors.Add(user.rapla_user_id, new RaplaConnector(user.getExchangeUserName(), user.getPassword()));
                 }
             }
         }
@@ -66,25 +66,11 @@ namespace WebService
         }
 
         [WebMethod(Description = "")]
-        public String ParseRapla(String user)
-        {
-            try
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(ConfigManager.getConfigString("rapla_data_path"));
-
-                connectors[user].saveReservation(doc);
-                return "Data computed";
-            }
-            catch (Exception e) { return e.Message; }
-        }
-
-        [WebMethod(Description = "")]
         public int registerUser(String rapla_user_id, String exchange_user_name, String password)
         {
             User user = new User(rapla_user_id, exchange_user_name, password, true);
 
-            connectors.Add(user.rapla_user_id, new RaplaConnector(user.exchange_user_name, user.getPassword()));
+            connectors.Add(user.rapla_user_id, new RaplaConnector(user.getExchangeUserName(), user.getPassword()));
             userManager.addUser(user);
 
             return 0;
@@ -98,9 +84,9 @@ namespace WebService
         }
 
         [WebMethod(Description = "")]
-        public XmlDocument getLastModified(String rapla_user_id, String last_modified)
+        public XmlDocument getLastModified(String rapla_user_id, DateTime last_modified)
         {
-            return new XmlDocument();
+            return connectors[rapla_user_id].getLastModified(last_modified);
         }
     }
 }

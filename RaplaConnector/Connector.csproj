@@ -75,8 +75,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Encryption.cs" />
-    <Compile Include="PasswordReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RaplaConnector.cs" />
     <Compile Include="RaplaConnectorTools.cs" />
